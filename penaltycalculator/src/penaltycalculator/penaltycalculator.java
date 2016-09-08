@@ -111,7 +111,6 @@ import java.awt.event.ActionListener;
 			String[] parents={"# of adults/parents in household", "1","2"};	//options for parentsdisplay
 			String[] children={"#of children/dependents in household","0","1", "2", "3", "4", "5", "6", "7", "8"};	//options for childrendisplay
 			parentsdisplay=new JComboBox<String>(parents);	//display parents options
-			String[] states={"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY"};
 			statedisplay=new JComboBox<String>(States);	//display states options
 			statedisplay.setSelectedIndex(39);	//DEFAULT STATE TO RHODE ISLAND SINCE THOSE ARE THE ZIPS I HAVE CODED IN
 			agidisplay=new JTextField("Annual Gross Income",15);	//AGI input
@@ -385,7 +384,12 @@ import java.awt.event.ActionListener;
 					}
 					else{
 						if (employeeoffer==true){
-							main_para="Because you have an employee offer, we cannot definitely determine your exemption status.  Your maximum penalty would be "+penalty;
+							if (medicaideligible==true){
+								main_para="Because you have an employee offer, we cannot definitely determine your exemption status.  Your maximum penalty would be "+penalty+ ".  However, our data shows that you or your family may be eligible for medicaid";
+							}
+							else{
+								main_para="Because you have an employee offer, we cannot definitely determine your exemption status.  Your maximum penalty would be "+penalty;
+							}
 						}
 						else if (medicaideligible==true){
 							main_para="Your penalty would be "+ Math.round(penalty) + " (or " +Math.round(penalty/12)+" per month).  However, our data shows that you or your family may be eligible for Medicaid.  For more information, please see our subsidy calculator.";
@@ -437,7 +441,7 @@ import java.awt.event.ActionListener;
 						layout.putConstraint(SpringLayout.NORTH, esi, 510+30*household, SpringLayout.NORTH, contentpane);
 					}
 					
-					System.out.println(chipeligible);
+					System.out.println(medicaideligible);
 					resultdisplay.setText(main_para);
 					System.out.println(help1);
 					
@@ -828,4 +832,5 @@ import java.awt.event.ActionListener;
 
 
 	}
+
 
